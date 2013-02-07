@@ -1,6 +1,5 @@
 <?php namespace JasonLewis\ResourceWatcher;
 
-use Closure;
 use JasonLewis\ResourceWatcher\Resource\Resource;
 
 class Tracker {
@@ -16,12 +15,12 @@ class Tracker {
 	 * Register a resource with the tracker.
 	 * 
 	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
-	 * @param  Closure  $callback
+	 * @param  JasonLewis\ResourceWatcher\Listener  $listener
 	 * @return void
 	 */
-	public function register(Resource $resource, Closure $callback)
+	public function register(Resource $resource, Listener $listener)
 	{
-		$this->tracked[$resource->getKey()] = compact('resource', 'callback');
+		$this->tracked[$resource->getKey()] = array($resource, $listener);
 	}
 
 	/**
@@ -43,7 +42,7 @@ class Tracker {
 	{
 		foreach ($this->tracked as $name => $tracked)
 		{
-			extract($tracked);
+			list($resource, $listener) = $tracked;
 
 			if ( ! $events = $resource->detectChanges())
 			{
@@ -54,8 +53,28 @@ class Tracker {
 			{
 				if ($event instanceof Event)
 				{
-					call_user_func($callback, $event->getResource(), $event);
+					$this->callListenerBindings($listener, $event);
 				}
+			}
+		}
+	}
+
+	/**
+	 * Call the bindings on the listener for a given event.
+	 * 
+	 * @param  JasonLewis\ResourceWatcher\Listener  $listener
+	 * @param  JasonLewis\ResourceWatcher\Event  $event
+	 * @return void
+	 */
+	protected function callListenerBindings(Listener $listener, Event $event)
+	{
+		$binding = $listener->determineEventBinding($event);
+
+		if ($listener->isBound($binding))
+		{
+			foreach ($listener->getBindings($binding) as $callback)
+			{
+				call_user_func($callback, $event->getResource());
 			}
 		}
 	}

@@ -45,10 +45,9 @@ class ResourceWatcher {
 	 * Register a resource to be watched.
 	 * 
 	 * @param  string  $resource
-	 * @param  Closure  $callback
-	 * @return JasonLewis\ResourceWatcher\ResourceWatcher
+	 * @return JasonLewis\ResourceWatcher\Listener
 	 */
-	public function watch($resource, Closure $callback)
+	public function watch($resource)
 	{
 		if ($this->files->isDirectory($resource))
 		{
@@ -59,9 +58,14 @@ class ResourceWatcher {
 			$resource = new FileResource($resource, $this->files);
 		}
 
-		$this->tracker->register($resource, $callback);
+		// The listener gives users the ability to bind listeners on the events
+		// created when watching a file or directory. We'll give the listener
+		// to the tracker so the tracker can fire any bound listeners.
+		$listener = new Listener;
 
-		return $this;
+		$this->tracker->register($resource, $listener);
+
+		return $listener;
 	}
 
 	/**
