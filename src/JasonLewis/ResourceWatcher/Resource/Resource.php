@@ -64,7 +64,7 @@ class Resource {
 
 			return array(new Event($this, Event::RESOURCE_CREATED));
 		}
-		elseif ( ! $this->files->exists($this->resource))
+		elseif ($this->exists and ! $this->files->exists($this->resource))
 		{
 			$this->exists = false;
 
