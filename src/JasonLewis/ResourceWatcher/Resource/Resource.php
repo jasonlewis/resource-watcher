@@ -44,8 +44,8 @@ class Resource {
 	{
 		$this->resource = $resource;
 		$this->files = $files;
-		$this->lastModified = $this->files->lastModified($resource);
 		$this->exists = $this->files->exists($resource);
+		$this->lastModified = ! $this->exists ?: $this->files->lastModified($resource);
 	}
 
 	/**
@@ -70,7 +70,7 @@ class Resource {
 
 			return array(new Event($this, Event::RESOURCE_DELETED));
 		}
-		elseif ($this->isModified())
+		elseif ($this->exists and $this->isModified())
 		{
 			$this->lastModified = $this->files->lastModified($this->resource);
 
