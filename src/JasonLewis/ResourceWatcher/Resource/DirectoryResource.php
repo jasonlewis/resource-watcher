@@ -36,6 +36,14 @@ class DirectoryResource extends Resource {
 	{
 		$events = parent::detectChanges();
 
+		// If the parent directories event is a modified code then we'll remove it so we don't
+		// get a double up of modified events when a child file or directory is created or
+		// deleted.
+		if ($events and $events[0]->getCode() == Event::RESOURCE_MODIFIED)
+		{
+			$events = array();
+		}
+
 		foreach ($this->children as $key => $child)
 		{
 			$childEvents = $child->detectChanges();
@@ -82,13 +90,13 @@ class DirectoryResource extends Resource {
 		{
 			if ($file->isDir() and ! $file->isDot())
 			{
-				$resource = new DirectoryResource($file->getPathname(), $this->files);
+				$resource = new DirectoryResource($file->getRealPath(), $this->files);
 
 				$children[$resource->getKey()] = $resource;
 			}
 			elseif ($file->isFile())
 			{
-				$resource = new FileResource($file->getPathname(), $this->files);
+				$resource = new FileResource($file->getRealPath(), $this->files);
 
 				$children[$resource->getKey()] = $resource;
 			}
