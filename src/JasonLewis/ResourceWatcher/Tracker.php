@@ -46,7 +46,7 @@ class Tracker {
 
 			if ( ! $events = $resource->detectChanges())
 			{
-				return;
+				continue;
 			}
 
 			foreach ($events as $event)
