@@ -12,16 +12,6 @@ class ResourceWatcherServiceProvider extends ServiceProvider {
 	protected $defer = false;
 
 	/**
-	 * Bootstrap the application events.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->package('jasonlewis/watcher');
-	}
-
-	/**
 	 * Register the service provider.
 	 *
 	 * @return void
@@ -34,23 +24,6 @@ class ResourceWatcherServiceProvider extends ServiceProvider {
 
 			return new ResourceWatcher($tracker, $app['files']);
 		});
-
-		$this->registerWatchCommand();
-	}
-
-	/**
-	 * Register the watch command.
-	 * 
-	 * @return void
-	 */
-	protected function registerWatchCommand()
-	{
-		$this->app['commands.watch'] = $this->app->share(function($app)
-		{
-			return new WatchCommand($app['watcher']);
-		});
-
-		$this->commands('commands.watch');
 	}
 
 	/**
