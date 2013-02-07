@@ -1,6 +1,6 @@
-<?php namespace JasonLewis\Watcher;
+<?php namespace JasonLewis\ResourceWatcher;
 
-use JasonLewis\Watcher\Resource\Resource;
+use JasonLewis\ResourceWatcher\Resource\Resource;
 
 class Event {
 
@@ -28,7 +28,7 @@ class Event {
 	/**
 	 * Resource instance.
 	 * 
-	 * @var JasonLewis\Watcher\Resource\Resource
+	 * @var JasonLewis\ResourceWatcher\Resource\Resource
 	 */
 	protected $resource;
 
@@ -42,7 +42,7 @@ class Event {
 	/**
 	 * Create a new event instance.
 	 * 
-	 * @param  JasonLewis\Watcher\Resource\Resource  $resource
+	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
 	 * @param  int  $code
 	 * @return void
 	 */
@@ -65,7 +65,7 @@ class Event {
 	/**
 	 * Get the resource.
 	 * 
-	 * @return JasonLewis\Watcher\Resource\Resource
+	 * @return JasonLewis\ResourceWatcher\Resource\Resource
 	 */
 	public function getResource()
 	{

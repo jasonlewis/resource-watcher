@@ -1,7 +1,7 @@
-<?php namespace JasonLewis\Watcher\Resource;
+<?php namespace JasonLewis\ResourceWatcher\Resource;
 
 use DirectoryIterator;
-use JasonLewis\Watcher\Event;
+use JasonLewis\ResourceWatcher\Event;
 use Illuminate\Filesystem\Filesystem;
 
 class DirectoryResource extends Resource {

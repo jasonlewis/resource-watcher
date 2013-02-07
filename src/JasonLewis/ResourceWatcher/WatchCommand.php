@@ -1,4 +1,4 @@
-<?php namespace JasonLewis\Watcher;
+<?php namespace JasonLewis\ResourceWatcher;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
@@ -18,15 +18,15 @@ class WatchCommand extends Command {
 	 *
 	 * @var string
 	 */
-	protected $description = "Wach a file for changes";
+	protected $description = "Watch a file or directory";
 
 	/**
 	 * Create a new command creator command.
 	 *
-	 * @param  JasonLewis\Watcher\Watcher  $watcher
+	 * @param  JasonLewis\ResourceWatcher\ResourceWatcher  $watcher
 	 * @return void
 	 */
-	public function __construct(Watcher $watcher)
+	public function __construct(ResourceWatcher $watcher)
 	{
 		parent::__construct();
 
@@ -40,7 +40,7 @@ class WatchCommand extends Command {
 	 */
 	public function fire()
 	{
-		$path = $this->laravel['path.base'].'/'.$this->input->getArgument('file');
+		$path = $this->laravel['path.base'].'/'.$this->input->getArgument('path');
 
 		$output = $this->output;
 
@@ -84,7 +84,7 @@ class WatchCommand extends Command {
 	protected function getArguments()
 	{
 		return array(
-			array('file', InputArgument::REQUIRED, 'The file to watch'),
+			array('path', InputArgument::REQUIRED, 'Path to file or directory'),
 		);
 	}
 

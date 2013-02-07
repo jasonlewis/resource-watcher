@@ -1,6 +1,6 @@
-<?php namespace JasonLewis\Watcher\Resource;
+<?php namespace JasonLewis\ResourceWatcher\Resource;
 
-use JasonLewis\Watcher\Event;
+use JasonLewis\ResourceWatcher\Event;
 use Illuminate\Filesystem\Filesystem;
 
 class Resource {

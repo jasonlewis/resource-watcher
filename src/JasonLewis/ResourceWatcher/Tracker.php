@@ -1,7 +1,7 @@
-<?php namespace JasonLewis\Watcher;
+<?php namespace JasonLewis\ResourceWatcher;
 
 use Closure;
-use JasonLewis\Watcher\Resource\Resource;
+use JasonLewis\ResourceWatcher\Resource\Resource;
 
 class Tracker {
 
@@ -15,7 +15,7 @@ class Tracker {
 	/**
 	 * Register a resource with the tracker.
 	 * 
-	 * @param  JasonLewis\Watcher\Resource\Resource  $resource
+	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
 	 * @param  Closure  $callback
 	 * @return void
 	 */
@@ -27,7 +27,7 @@ class Tracker {
 	/**
 	 * Determine if a resource is tracked.
 	 * 
-	 * @param  JasonLewis\Watcher\Resource\Resource  $resource
+	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
 	 */
 	public function isTracked(Resource $resource)
 	{

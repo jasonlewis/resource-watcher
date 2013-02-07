@@ -1,16 +1,16 @@
-<?php namespace JasonLewis\Watcher;
+<?php namespace JasonLewis\ResourceWatcher;
 
 use Closure;
 use Illuminate\Filesystem\Filesystem;
-use JasonLewis\Watcher\Resource\FileResource;
-use JasonLewis\Watcher\Resource\DirectoryResource;
+use JasonLewis\ResourceWatcher\Resource\FileResource;
+use JasonLewis\ResourceWatcher\Resource\DirectoryResource;
 
-class Watcher {
+class ResourceWatcher {
 
 	/**
 	 * Tracker instance.
 	 * 
-	 * @var JasonLewis\Watcher\Tracker
+	 * @var JasonLewis\ResourceWatcher\Tracker
 	 */
 	protected $tracker;
 
@@ -31,7 +31,7 @@ class Watcher {
 	/**
 	 * Create a new watcher instance.
 	 * 
-	 * @param  JasonLewis\Watcher\Tracker  $tracker
+	 * @param  JasonLewis\ResourceWatcher\Tracker  $tracker
 	 * @param  Illuminate\Filesystem\Filesystem  $files
 	 * @return void
 	 */
@@ -46,7 +46,7 @@ class Watcher {
 	 * 
 	 * @param  string  $resource
 	 * @param  Closure  $callback
-	 * @return JasonLewis\Watcher\Watcher
+	 * @return JasonLewis\ResourceWatcher\ResourceWatcher
 	 */
 	public function watch($resource, Closure $callback)
 	{

@@ -1,6 +1,7 @@
 {
-    "name": "jasonlewis/watcher",
-    "description": "Simple resource watcher for Laravel 4.",
+    "name": "jasonlewis/resource-watcher",
+    "description": "Simple PHP resource watcher library.",
+    "keywords": ["resource", "assets", "laravel"],
     "authors": [
         {
             "name": "Jason Lewis",
@@ -14,7 +15,7 @@
     },
     "autoload": {
         "psr-0": {
-            "JasonLewis\\Watcher": "src/"
+            "JasonLewis\\ResourceWatcher": "src/"
         }
     },
     "minimum-stability": "dev"

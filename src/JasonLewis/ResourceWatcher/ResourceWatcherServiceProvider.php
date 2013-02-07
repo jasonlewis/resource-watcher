@@ -1,8 +1,8 @@
-<?php namespace JasonLewis\Watcher;
+<?php namespace JasonLewis\ResourceWatcher;
 
 use Illuminate\Support\ServiceProvider;
 
-class WatcherServiceProvider extends ServiceProvider {
+class ResourceWatcherServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -32,7 +32,7 @@ class WatcherServiceProvider extends ServiceProvider {
 		{
 			$tracker = new Tracker;
 
-			return new Watcher($tracker, $app['files']);
+			return new ResourceWatcher($tracker, $app['files']);
 		});
 
 		$this->registerWatchCommand();
@@ -60,7 +60,7 @@ class WatcherServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array('watcher', 'commmands.watch');
 	}
 
 }
