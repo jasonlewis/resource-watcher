@@ -103,6 +103,16 @@ class Watcher {
 	}
 
 	/**
+	 * Get the tracker instance.
+	 * 
+	 * @return JasonLewis\ResourceWatcher\Tracker
+	 */
+	public function getTracker()
+	{
+		return $this->tracker;
+	}
+
+	/**
 	 * Stop watching.
 	 * 
 	 * @return void
