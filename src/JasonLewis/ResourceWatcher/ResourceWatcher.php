@@ -3,6 +3,7 @@
 use Closure;
 use Illuminate\Filesystem\Filesystem;
 use JasonLewis\ResourceWatcher\Resource\FileResource;
+use JasonLewis\ResourceWatcher\Resource\UnknownResource;
 use JasonLewis\ResourceWatcher\Resource\DirectoryResource;
 
 class ResourceWatcher {
@@ -49,7 +50,11 @@ class ResourceWatcher {
 	 */
 	public function watch($resource)
 	{
-		if ($this->files->isDirectory($resource))
+		if ( ! $this->files->exists($resource))
+		{
+			$resource = new UnknownResource($resource, $this->files);
+		}
+		elseif ($this->files->isDirectory($resource))
 		{
 			$resource = new DirectoryResource($resource, $this->files);
 		}
