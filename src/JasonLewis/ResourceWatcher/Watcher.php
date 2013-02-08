@@ -93,7 +93,7 @@ class Watcher {
 
 			$timeWatching += $interval;
 
-			if ( ! is_null($timeout) and $timeWatching > $timeout)
+			if ( ! is_null($timeout) and $timeWatching >= $timeout)
 			{
 				break;
 			}
