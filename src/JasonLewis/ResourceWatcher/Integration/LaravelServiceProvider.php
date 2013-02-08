@@ -1,8 +1,8 @@
-<?php namespace JasonLewis\ResourceWatcher;
+<?php namespace JasonLewis\ResourceWatcher\Integration;
 
 use Illuminate\Support\ServiceProvider;
 
-class ResourceWatcherServiceProvider extends ServiceProvider {
+class LaravelServiceProvider extends ServiceProvider {
 
 	/**
 	 * Indicates if loading of the provider is deferred.
@@ -33,7 +33,7 @@ class ResourceWatcherServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array('watcher', 'commmands.watch');
+		return array('watcher');
 	}
 
 }
