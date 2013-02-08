@@ -6,7 +6,7 @@ use JasonLewis\ResourceWatcher\Resource\FileResource;
 use JasonLewis\ResourceWatcher\Resource\UnknownResource;
 use JasonLewis\ResourceWatcher\Resource\DirectoryResource;
 
-class ResourceWatcher {
+class Watcher {
 
 	/**
 	 * Tracker instance.
