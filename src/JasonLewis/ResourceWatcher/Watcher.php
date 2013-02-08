@@ -91,14 +91,14 @@ class Watcher {
 		{
 			usleep($interval);
 
+			$this->tracker->checkTrackings();
+
 			$timeWatching += $interval;
 
 			if ( ! is_null($timeout) and $timeWatching >= $timeout)
 			{
-				break;
+				$this->stopWatch();
 			}
-
-			$this->tracker->checkTrackings();
 		}
 	}
 
