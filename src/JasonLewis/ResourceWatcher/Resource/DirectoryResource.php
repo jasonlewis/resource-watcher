@@ -7,24 +7,20 @@ use Illuminate\Filesystem\Filesystem;
 class DirectoryResource extends Resource {
 
 	/**
-	 * Array of directory resources children.
+	 * Array of directory resources descendants.
 	 * 
 	 * @var array
 	 */
-	protected $children = array();
+	protected $descendants = array();
 
 	/**
-	 * Create a new directory resource instance.
+	 * Setup the directory resource.
 	 * 
-	 * @param  string  $resource
-	 * @param  Illuminate\Filesystem\Filesystem  $files
 	 * @return void
 	 */
-	public function __construct($resource, Filesystem $files)
+	public function setupDirectory()
 	{
-		parent::__construct($resource, $files);
-
-		$this->children = $this->detectDirectoryChildren();
+		$this->descendants = $this->detectDirectoryDescendants();
 	}
 
 	/**
@@ -36,40 +32,41 @@ class DirectoryResource extends Resource {
 	{
 		$events = parent::detectChanges();
 
-		// If the parent directories event is a modified code then we'll remove it so we don't
-		// get a double up of modified events when a child file or directory is created or
-		// deleted.
+		// When a descendant file is created or deleted a modified event is fired on the
+		// directory. This is the only way a directory will receive a modified event and
+		// will thus result in two events being fired for a single descendant modification
+		// within the directory. This will clear the events if we got a modified event.
 		if ($events and $events[0]->getCode() == Event::RESOURCE_MODIFIED)
 		{
 			$events = array();
 		}
 
-		foreach ($this->children as $key => $child)
+		foreach ($this->descendants as $key => $descendant)
 		{
-			$childEvents = $child->detectChanges();
+			$descendantEvents = $descendant->detectChanges();
 
-			foreach ($childEvents as $childEvent)
+			foreach ($descendantEvents as $event)
 			{
-				if ($childEvent instanceof Event and $childEvent->getCode() == Event::RESOURCE_DELETED)
+				if ($event instanceof Event and $event->getCode() == Event::RESOURCE_DELETED)
 				{
-					unset($this->children[$key]);
+					unset($this->descendants[$key]);
 				}
 			}
 
-			$events = array_merge($events, $childEvents);
+			$events = array_merge($events, $descendantEvents);
 		}
 
-		// If this directory still exists we'll check the directory children again for any
-		// new children. We'll then create a created event.
+		// If this directory still exists we'll check the directories descendants again for any
+		// new descendants.
 		if ($this->exists)
 		{
-			foreach ($this->detectDirectoryChildren() as $key => $child)
+			foreach ($this->detectDirectoryDescendants() as $key => $descendant)
 			{
-				if ( ! isset($this->children[$key]))
+				if ( ! isset($this->descendants[$key]))
 				{
-					$this->children[$key] = $child;
+					$this->descendants[$key] = $descendant;
 
-					$events[] = new Event($child, Event::RESOURCE_CREATED);
+					$events[] = new Event($descendant, Event::RESOURCE_CREATED);
 				}
 			}
 		}
@@ -78,13 +75,13 @@ class DirectoryResource extends Resource {
 	}
 
 	/**
-	 * Detect the directory resources children resources.
+	 * Detect the descendant resources of the directory.
 	 * 
 	 * @return array
 	 */
-	protected function detectDirectoryChildren()
+	protected function detectDirectoryDescendants()
 	{
-		$children = array();
+		$descendants = array();
 
 		foreach (new DirectoryIterator($this->resource) as $file)
 		{
@@ -92,27 +89,27 @@ class DirectoryResource extends Resource {
 			{
 				$resource = new DirectoryResource($file->getRealPath(), $this->files);
 
-				$children[$resource->getKey()] = $resource;
+				$descendants[$resource->getKey()] = $resource;
 			}
 			elseif ($file->isFile())
 			{
 				$resource = new FileResource($file->getRealPath(), $this->files);
 
-				$children[$resource->getKey()] = $resource;
+				$descendants[$resource->getKey()] = $resource;
 			}
 		}
 
-		return $children;
+		return $descendants;
 	}
 
 	/**
-	 * Get the directory resources children.
+	 * Get the descendants of the directory.
 	 * 
 	 * @return array
 	 */
-	public function getChildren()
+	public function getDescendants()
 	{
-		return $this->children;
+		return $this->descendants;
 	}
 
 }

@@ -57,6 +57,8 @@ class Watcher {
 		elseif ($this->files->isDirectory($resource))
 		{
 			$resource = new DirectoryResource($resource, $this->files);
+
+			$resource->setupDirectory();
 		}
 		else
 		{
