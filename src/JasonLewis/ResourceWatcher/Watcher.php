@@ -1,6 +1,7 @@
 <?php namespace JasonLewis\ResourceWatcher;
 
 use Closure;
+use RuntimeException;
 use Illuminate\Filesystem\Filesystem;
 use JasonLewis\ResourceWatcher\Resource\FileResource;
 use JasonLewis\ResourceWatcher\Resource\UnknownResource;
@@ -52,7 +53,7 @@ class Watcher {
 	{
 		if ( ! $this->files->exists($resource))
 		{
-			$resource = new UnknownResource($resource, $this->files);
+			throw new RuntimeException('Resource must exist before you can watch it.');
 		}
 		elseif ($this->files->isDirectory($resource))
 		{
@@ -79,9 +80,10 @@ class Watcher {
 	 * 
 	 * @param  int  $interval
 	 * @param  int  $timeout
+	 * @param  Closure  $callback
 	 * @return void
 	 */
-	public function startWatch($interval = 1000000, $timeout = null)
+	public function startWatch($interval = 1000000, $timeout = null, Closure $callback = null)
 	{
 		$this->watching = true;
 
@@ -89,6 +91,11 @@ class Watcher {
 
 		while ($this->watching)
 		{
+			if (is_callable($callback))
+			{
+				call_user_func($callback, $this);
+			}
+
 			usleep($interval);
 
 			$this->tracker->checkTrackings();
