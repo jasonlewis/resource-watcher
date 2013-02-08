@@ -4,7 +4,6 @@ use Closure;
 use RuntimeException;
 use Illuminate\Filesystem\Filesystem;
 use JasonLewis\ResourceWatcher\Resource\FileResource;
-use JasonLewis\ResourceWatcher\Resource\UnknownResource;
 use JasonLewis\ResourceWatcher\Resource\DirectoryResource;
 
 class Watcher {
