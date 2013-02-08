@@ -34,6 +34,16 @@ class Tracker {
 	}
 
 	/**
+	 * Get the tracked resources.
+	 * 
+	 * @return array
+	 */
+	public function getTracked()
+	{
+		return $this->tracked;
+	}
+
+	/**
 	 * Detect any changes on the tracked resources.
 	 * 
 	 * @return void
