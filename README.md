@@ -71,7 +71,7 @@ $listener = $app['watcher']->watch('path/to/resource');
 $listener = App::make('watcher')->watch('path/to/resource');
 ```
 
-Register `JasonLewis\Resource\Watcher\Integration\LaravelServiceProvider` in the array of providers in `app/config/app.php`.
+Register `JasonLewis\ResourceWatcher\Integration\LaravelServiceProvider` in the array of providers in `app/config/app.php`.
 
 ## License
 
