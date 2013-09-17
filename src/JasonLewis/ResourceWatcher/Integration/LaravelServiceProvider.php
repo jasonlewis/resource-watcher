@@ -1,6 +1,8 @@
 <?php namespace JasonLewis\ResourceWatcher\Integration;
 
 use Illuminate\Support\ServiceProvider;
+use JasonLewis\ResourceWatcher\Tracker;
+use JasonLewis\ResourceWatcher\Watcher;
 
 class LaravelServiceProvider extends ServiceProvider {
 
@@ -22,7 +24,7 @@ class LaravelServiceProvider extends ServiceProvider {
 		{
 			$tracker = new Tracker;
 
-			return new ResourceWatcher($tracker, $app['files']);
+			return new Watcher($tracker, $app['files']);
 		});
 	}
 
