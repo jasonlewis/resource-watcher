@@ -1,20 +1,38 @@
 <?php namespace JasonLewis\ResourceWatcher;
 
 use Closure;
+use RuntimeException;
 use JasonLewis\ResourceWatcher\Resource\Resource;
 
 class Listener {
 
 	/**
 	 * Listener bindings array.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $bindings = array();
 
 	/**
+	 * Bind a listener to a given event.
+	 *
+	 * @param  string  $event
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function on($event, Closure $callback)
+	{
+		if ( ! in_array($event, array('modify', 'delete', 'create')))
+		{
+			throw new RuntimeException('Could not bind to unknown event '.$event);
+		}
+
+		$this->registerBinding($event, $callback);
+	}
+
+	/**
 	 * Bind to a modify event.
-	 * 
+	 *
 	 * @param  Closure  $callback
 	 * @return void
 	 */
@@ -24,8 +42,19 @@ class Listener {
 	}
 
 	/**
+	 * Alias of the onModify method.
+	 *
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function modify(Closure $callback)
+	{
+		$this->onModify($callback);
+	}
+
+	/**
 	 * Bind to a delete event.
-	 * 
+	 *
 	 * @param  Closure  $callback
 	 * @return void
 	 */
@@ -35,8 +64,19 @@ class Listener {
 	}
 
 	/**
+	 * Alias of the onDelete method.
+	 *
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function delete(Closure $callback)
+	{
+		$this->onDelete($callback);
+	}
+
+	/**
 	 * Bind to a create event.
-	 * 
+	 *
 	 * @param  Closure  $callback
 	 * @return void
 	 */
@@ -46,8 +86,19 @@ class Listener {
 	}
 
 	/**
+	 * Alias of the onCreate method.
+	 *
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function create(Closure $callback)
+	{
+		$this->onCreate($callback);
+	}
+
+	/**
 	 * Register a binding.
-	 * 
+	 *
 	 * @param  string  $binding
 	 * @param  Closure  $callback
 	 * @return void
@@ -59,7 +110,7 @@ class Listener {
 
 	/**
 	 * Determine if a binding is bound to the listener.
-	 * 
+	 *
 	 * @param  string  $binding
 	 * @return bool
 	 */
@@ -70,7 +121,7 @@ class Listener {
 
 	/**
 	 * Get the bindings or a specific array of bindings.
-	 * 
+	 *
 	 * @param  string  $binding
 	 * @return array
 	 */
@@ -86,7 +137,7 @@ class Listener {
 
 	/**
 	 * Determine the binding for a given event.
-	 * 
+	 *
 	 * @param  JasonLewis\ResourceWatcher\Event  $event
 	 * @return string
 	 */
