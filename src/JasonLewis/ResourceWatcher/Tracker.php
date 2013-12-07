@@ -1,31 +1,31 @@
 <?php namespace JasonLewis\ResourceWatcher;
 
-use JasonLewis\ResourceWatcher\Resource\Resource;
+use JasonLewis\ResourceWatcher\Resource\ResourceInterface;
 
 class Tracker {
 
 	/**
 	 * Array of tracked resources.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $tracked = array();
 
 	/**
 	 * Register a resource with the tracker.
-	 * 
-	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
+	 *
+	 * @param  JasonLewis\ResourceWatcher\Resource\ResourceInterface  $resource
 	 * @param  JasonLewis\ResourceWatcher\Listener  $listener
 	 * @return void
 	 */
-	public function register(Resource $resource, Listener $listener)
+	public function register(ResourceInterface $resource, Listener $listener)
 	{
 		$this->tracked[$resource->getKey()] = array($resource, $listener);
 	}
 
 	/**
 	 * Determine if a resource is tracked.
-	 * 
+	 *
 	 * @param  JasonLewis\ResourceWatcher\Resource\Resource  $resource
 	 */
 	public function isTracked(Resource $resource)
@@ -35,7 +35,7 @@ class Tracker {
 
 	/**
 	 * Get the tracked resources.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getTracked()
@@ -45,7 +45,7 @@ class Tracker {
 
 	/**
 	 * Detect any changes on the tracked resources.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function checkTrackings()
@@ -71,7 +71,7 @@ class Tracker {
 
 	/**
 	 * Call the bindings on the listener for a given event.
-	 * 
+	 *
 	 * @param  JasonLewis\ResourceWatcher\Listener  $listener
 	 * @param  JasonLewis\ResourceWatcher\Event  $event
 	 * @return void

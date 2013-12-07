@@ -4,18 +4,18 @@ use DirectoryIterator;
 use JasonLewis\ResourceWatcher\Event;
 use Illuminate\Filesystem\Filesystem;
 
-class DirectoryResource extends Resource {
+class DirectoryResource extends FileResource implements ResourceInterface {
 
 	/**
 	 * Array of directory resources descendants.
-	 * 
+	 *
 	 * @var array
 	 */
 	protected $descendants = array();
 
 	/**
 	 * Setup the directory resource.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function setupDirectory()
@@ -25,7 +25,7 @@ class DirectoryResource extends Resource {
 
 	/**
 	 * Detect any changes to the resource.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function detectChanges()
@@ -76,7 +76,7 @@ class DirectoryResource extends Resource {
 
 	/**
 	 * Detect the descendant resources of the directory.
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function detectDirectoryDescendants()
@@ -104,7 +104,7 @@ class DirectoryResource extends Resource {
 
 	/**
 	 * Get the descendants of the directory.
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getDescendants()

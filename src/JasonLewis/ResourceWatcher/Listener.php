@@ -7,14 +7,14 @@ use JasonLewis\ResourceWatcher\Resource\Resource;
 class Listener {
 
 	/**
-	 * Listener bindings array.
+	 * Array of bindings.
 	 *
 	 * @var array
 	 */
 	protected $bindings = array();
 
 	/**
-	 * Bind a listener to a given event.
+	 * Bind to a given event.
 	 *
 	 * @param  string  $event
 	 * @param  Closure  $callback
@@ -31,7 +31,7 @@ class Listener {
 	}
 
 	/**
-	 * Bind to a modify event.
+	 * Bind
 	 *
 	 * @param  Closure  $callback
 	 * @return void
