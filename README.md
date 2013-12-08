@@ -2,6 +2,8 @@
 
 A resource watcher allows you to watch a resource for any changes. This means you can watch a directory and then listen for any changes to files within that directory or to the directory itself.
 
+[![Build Status](https://travis-ci.org/jasonlewis/resource-watcher.png?branch=master)](https://travis-ci.org/jasonlewis/resource-watcher)
+
 ## Installation
 
 To install Resource Watcher add it to the `requires` key of your `composer.json` file.
