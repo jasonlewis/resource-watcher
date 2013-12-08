@@ -38,7 +38,7 @@ $tracker = new JasonLewis\ResourceWatcher\Tracker;
 |
 */
 
-$watcher = new JasonLewis\ResourceWatcher\ResourceWatcher($tracker, $files);
+$watcher = new JasonLewis\ResourceWatcher\Watcher($tracker, $files);
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ $watcher = new JasonLewis\ResourceWatcher\ResourceWatcher($tracker, $files);
 |
 */
 
-$listener = $watcher->watch('path/to/resource');
+$listener = $watcher->watch('foo');
 
 /*
 |--------------------------------------------------------------------------
@@ -61,10 +61,8 @@ $listener = $watcher->watch('path/to/resource');
 |
 */
 
-$listener->onCreate(function($resource)
+$listener->onCreate(function($resource, $path)
 {
-	$path = $resource->getPath();
-
 	echo "{$path} was created.".PHP_EOL;
 });
 
@@ -77,10 +75,8 @@ $listener->onCreate(function($resource)
 |
 */
 
-$listener->onDelete(function($resource)
+$listener->onDelete(function($resource, $path)
 {
-	$path = $resource->getPath();
-
 	echo "{$path} was deleted.".PHP_EOL;
 });
 
@@ -93,11 +89,34 @@ $listener->onDelete(function($resource)
 |
 */
 
-$listener->onModify(function($resource)
+$listener->onModify(function($resource, $path)
 {
-	$path = $resource->getPath();
-
 	echo "{$path} was modified.".PHP_EOL;
+});
+
+/*
+|--------------------------------------------------------------------------
+| Anything Listener
+|--------------------------------------------------------------------------
+|
+| Listen for anything.
+|
+*/
+
+$listener->onAnything(function($event, $resource, $path)
+{
+	switch ($event->getCode())
+	{
+		case JasonLewis\ResourceWatcher\Event::RESOURCE_DELETED:
+			echo "{$path} was deleted (from anything listener).".PHP_EOL;
+			break;
+		case JasonLewis\ResourceWatcher\Event::RESOURCE_MODIFIED:
+			echo "{$path} was modified (from anything listener).".PHP_EOL;
+			break;
+		case JasonLewis\ResourceWatcher\Event::RESOURCE_CREATED:
+			echo "{$path} was created (from anything listener).".PHP_EOL;
+			break;
+	}
 });
 
 /*
@@ -109,10 +128,6 @@ $listener->onModify(function($resource)
 | the watcher will poll for changes every second. You can adjust this by
 | passing in an optional first parameter. The interval is given in
 | microseconds. 1,000,000 microseconds is 1 second.
-|
-| By default the watch will continue until such time that it's aborted from
-| the terminal. To set a timeout pass in the number of microseconds before
-| the watch will abort as the second parameter.
 |
 */
 
