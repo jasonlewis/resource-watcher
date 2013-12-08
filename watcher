@@ -129,6 +129,10 @@ $listener->onAnything(function($event, $resource, $path)
 | passing in an optional first parameter. The interval is given in
 | microseconds. 1,000,000 microseconds is 1 second.
 |
+| By default the watch will continue until such time that it's aborted from
+| the terminal. To set a timeout pass in the number of microseconds before
+| the watch will abort as the second parameter.
+|
 */
 
-$watcher->startWatch();
+$watcher->start();
