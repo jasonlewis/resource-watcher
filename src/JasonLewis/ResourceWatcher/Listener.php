@@ -22,12 +22,34 @@ class Listener {
 	 */
 	public function on($event, Closure $callback)
 	{
-		if ( ! in_array($event, array('modify', 'delete', 'create')))
+		if ( ! in_array($event, array('*', 'modify', 'delete', 'create')))
 		{
 			throw new RuntimeException('Could not bind to unknown event '.$event);
 		}
 
 		$this->registerBinding($event, $callback);
+	}
+
+	/**
+	 * Bind to anything.
+	 *
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function onAnything(Closure $callback)
+	{
+		$this->on('*', $callback);
+	}
+
+	/**
+	 * Alias of the onAnything event.
+	 *
+	 * @param  Closure  $callback
+	 * @return void
+	 */
+	public function anything(Closure $callback)
+	{
+		$this->on('*', $callback);
 	}
 
 	/**
@@ -38,7 +60,7 @@ class Listener {
 	 */
 	public function onModify(Closure $callback)
 	{
-		$this->registerBinding('modify', $callback);
+		$this->on('modify', $callback);
 	}
 
 	/**
@@ -49,7 +71,7 @@ class Listener {
 	 */
 	public function modify(Closure $callback)
 	{
-		$this->onModify($callback);
+		$this->on('modify', $callback);
 	}
 
 	/**
@@ -60,7 +82,7 @@ class Listener {
 	 */
 	public function onDelete(Closure $callback)
 	{
-		$this->registerBinding('delete', $callback);
+		$this->on('delete', $callback);
 	}
 
 	/**
@@ -71,7 +93,7 @@ class Listener {
 	 */
 	public function delete(Closure $callback)
 	{
-		$this->onDelete($callback);
+		$this->on('delete', $callback);
 	}
 
 	/**
@@ -82,7 +104,7 @@ class Listener {
 	 */
 	public function onCreate(Closure $callback)
 	{
-		$this->registerBinding('create', $callback);
+		$this->on('create', $callback);
 	}
 
 	/**
@@ -93,7 +115,7 @@ class Listener {
 	 */
 	public function create(Closure $callback)
 	{
-		$this->onCreate($callback);
+		$this->on('create', $callback);
 	}
 
 	/**

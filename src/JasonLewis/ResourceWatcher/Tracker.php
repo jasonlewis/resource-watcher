@@ -89,6 +89,18 @@ class Tracker {
 				call_user_func($callback, $resource, $resource->getPath());
 			}
 		}
+
+		// If a listener has a binding for anything we'll also spin through
+		// them and call each of them.
+		if ($listener->hasBinding('*'))
+		{
+			foreach ($listener->getBindings('*') as $callback)
+			{
+				$resource = $event->getResource();
+
+				call_user_func($callback, $event, $resource, $resource->getPath());
+			}
+		}
 	}
 
 }
