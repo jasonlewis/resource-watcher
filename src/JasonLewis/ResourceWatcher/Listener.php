@@ -114,7 +114,7 @@ class Listener {
 	 * @param  string  $binding
 	 * @return bool
 	 */
-	public function isBound($binding)
+	public function hasBinding($binding)
 	{
 		return isset($this->bindings[$binding]);
 	}

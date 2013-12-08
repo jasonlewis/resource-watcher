@@ -1,16 +1,24 @@
 <?php namespace JasonLewis\ResourceWatcher\Resource;
 
+use SplFileInfo;
 use JasonLewis\ResourceWatcher\Event;
 use Illuminate\Filesystem\Filesystem;
 
 class FileResource implements ResourceInterface {
 
 	/**
-	 * Resource string.
+	 * SplFileInfo resource.
+	 *
+	 * @var SplFileInfo
+	 */
+	protected $resource;
+
+	/**
+	 * Path to the resource.
 	 *
 	 * @var string
 	 */
-	protected $resource;
+	protected $path;
 
 	/**
 	 * Illuminate filesystem instance.
@@ -36,16 +44,17 @@ class FileResource implements ResourceInterface {
 	/**
 	 * Create a new resource instance.
 	 *
-	 * @param  string  $resource
+	 * @param  SplFileInfo  $resource
 	 * @param  Illuminate\Filesystem\Filesystem  $files
 	 * @return void
 	 */
-	public function __construct($resource, Filesystem $files)
+	public function __construct(SplFileInfo $resource, Filesystem $files)
 	{
 		$this->resource = $resource;
+		$this->path = $resource->getRealPath();
 		$this->files = $files;
-		$this->exists = $this->files->exists($resource);
-		$this->lastModified = ! $this->exists ?: $this->files->lastModified($resource);
+		$this->exists = $this->files->exists($this->path);
+		$this->lastModified = ! $this->exists ?: $this->files->lastModified($this->path);
 	}
 
 	/**
@@ -55,16 +64,16 @@ class FileResource implements ResourceInterface {
 	 */
 	public function detectChanges()
 	{
-		clearstatcache(true, $this->resource);
+		clearstatcache(true, $this->path);
 
-		if ( ! $this->exists and $this->files->exists($this->resource))
+		if ( ! $this->exists and $this->files->exists($this->path))
 		{
-			$this->lastModified = $this->files->lastModified($this->resource);
+			$this->lastModified = $this->files->lastModified($this->path);
 			$this->exists = true;
 
 			return array(new Event($this, Event::RESOURCE_CREATED));
 		}
-		elseif ($this->exists and ! $this->files->exists($this->resource))
+		elseif ($this->exists and ! $this->files->exists($this->path))
 		{
 			$this->exists = false;
 
@@ -72,7 +81,7 @@ class FileResource implements ResourceInterface {
 		}
 		elseif ($this->exists and $this->isModified())
 		{
-			$this->lastModified = $this->files->lastModified($this->resource);
+			$this->lastModified = $this->files->lastModified($this->path);
 
 			return array(new Event($this, Event::RESOURCE_MODIFIED));
 		}
@@ -87,7 +96,7 @@ class FileResource implements ResourceInterface {
 	 */
 	public function isModified()
 	{
-		return $this->lastModified < $this->files->lastModified($this->resource);
+		return $this->lastModified < $this->files->lastModified($this->path);
 	}
 
 	/**
@@ -97,15 +106,25 @@ class FileResource implements ResourceInterface {
 	 */
 	public function getKey()
 	{
-		return md5($this->resource);
+		return md5($this->path);
 	}
 
 	/**
-	 * Get the resource path.
+	 * Get the path of the resource.
 	 *
 	 * @return string
 	 */
 	public function getPath()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * Get the resource SplFileInfo.
+	 *
+	 * @return SplFileInfo
+	 */
+	public function getSplFileInfo()
 	{
 		return $this->resource;
 	}

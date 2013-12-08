@@ -65,7 +65,7 @@ class Event {
 	/**
 	 * Get the resource.
 	 *
-	 * @return JasonLewis\ResourceWatcher\Resource\Resource
+	 * @return JasonLewis\ResourceWatcher\Resource\ResourceInterface
 	 */
 	public function getResource()
 	{

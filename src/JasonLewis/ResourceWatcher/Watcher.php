@@ -1,6 +1,7 @@
 <?php namespace JasonLewis\ResourceWatcher;
 
 use Closure;
+use SplFileInfo;
 use RuntimeException;
 use Illuminate\Filesystem\Filesystem;
 use JasonLewis\ResourceWatcher\Resource\FileResource;
@@ -10,28 +11,28 @@ class Watcher {
 
 	/**
 	 * Tracker instance.
-	 * 
+	 *
 	 * @var JasonLewis\ResourceWatcher\Tracker
 	 */
 	protected $tracker;
 
 	/**
 	 * Illuminate filesystem instance.
-	 * 
+	 *
 	 * @var Illuminate\Filesystem\Filesystem
 	 */
 	protected $files;
 
 	/**
 	 * Indicates if the watcher is watching.
-	 * 
+	 *
 	 * @var bool
 	 */
 	protected $watching = false;
 
 	/**
 	 * Create a new watcher instance.
-	 * 
+	 *
 	 * @param  JasonLewis\ResourceWatcher\Tracker  $tracker
 	 * @param  Illuminate\Filesystem\Filesystem  $files
 	 * @return void
@@ -44,7 +45,7 @@ class Watcher {
 
 	/**
 	 * Register a resource to be watched.
-	 * 
+	 *
 	 * @param  string  $resource
 	 * @return JasonLewis\ResourceWatcher\Listener
 	 */
@@ -56,13 +57,13 @@ class Watcher {
 		}
 		elseif ($this->files->isDirectory($resource))
 		{
-			$resource = new DirectoryResource($resource, $this->files);
+			$resource = new DirectoryResource(new SplFileInfo($resource), $this->files);
 
 			$resource->setupDirectory();
 		}
 		else
 		{
-			$resource = new FileResource($resource, $this->files);
+			$resource = new FileResource(new SplFileInfo($resource), $this->files);
 		}
 
 		// The listener gives users the ability to bind listeners on the events
@@ -78,7 +79,7 @@ class Watcher {
 	/**
 	 * Start watching for a given interval. The interval and timeout and measured
 	 * in microseconds, so 1,000,000 microseconds is equal to 1 second.
-	 * 
+	 *
 	 * @param  int  $interval
 	 * @param  int  $timeout
 	 * @param  Closure  $callback
@@ -112,7 +113,7 @@ class Watcher {
 
 	/**
 	 * Get the tracker instance.
-	 * 
+	 *
 	 * @return JasonLewis\ResourceWatcher\Tracker
 	 */
 	public function getTracker()
@@ -122,7 +123,7 @@ class Watcher {
 
 	/**
 	 * Stop watching.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function stopWatch()
@@ -132,7 +133,7 @@ class Watcher {
 
 	/**
 	 * Determine if watcher is watching.
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function isWatching()

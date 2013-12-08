@@ -80,11 +80,13 @@ class Tracker {
 	{
 		$binding = $listener->determineEventBinding($event);
 
-		if ($listener->isBound($binding))
+		if ($listener->hasBinding($binding))
 		{
 			foreach ($listener->getBindings($binding) as $callback)
 			{
-				call_user_func($callback, $event->getResource());
+				$resource = $event->getResource();
+
+				call_user_func($callback, $resource, $resource->getPath());
 			}
 		}
 	}
