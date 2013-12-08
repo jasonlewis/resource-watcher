@@ -88,7 +88,7 @@ class WatcherTest extends PHPUnit_Framework_TestCase {
 		$listener = $this->watcher->watch(__DIR__.'/mock.file');
 		$this->assertInstanceOf('JasonLewis\ResourceWatcher\Listener', $listener);
 
-		$created = $modified = $deleted = false;
+		$created = $modified = $deleted = $anything = false;
 
 		$listener->onCreate(function($resource) use (&$created)
 		{
@@ -103,6 +103,11 @@ class WatcherTest extends PHPUnit_Framework_TestCase {
 		$listener->onDelete(function($resource) use (&$deleted)
 		{
 			$deleted = true;
+		});
+
+		$listener->onAnything(function($event, $resource) use (&$anything)
+		{
+			$anything = true;
 		});
 
 		$iterations = 0;
@@ -132,6 +137,7 @@ class WatcherTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($created);
 		$this->assertTrue($modified);
 		$this->assertTrue($deleted);
+		$this->assertTrue($anything);
 	}
 
 }

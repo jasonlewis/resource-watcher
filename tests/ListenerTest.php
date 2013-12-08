@@ -6,19 +6,54 @@ use JasonLewis\ResourceWatcher\Listener;
 
 class ListenerTest extends PHPUnit_Framework_TestCase {
 
+
+	public function tearDown()
+	{
+		m::close();
+	}
+
+
+	/**
+	 * @expectedException \RuntimeException
+	 */
+	public function testRegisteringInvalidBindingThrowsException()
+	{
+		$listener = new Listener;
+		$listener->on('fail', function(){});
+	}
+
+
 	public function testCanRegisterBindings()
 	{
 		$listener = new Listener;
 		$listener->onCreate(function(){});
 		$listener->onModify(function(){});
 		$listener->onDelete(function(){});
+		$listener->onAnything(function(){});
 		$this->assertArrayHasKey('modify', $listener->getBindings());
 		$this->assertArrayHasKey('create', $listener->getBindings());
 		$this->assertArrayHasKey('delete', $listener->getBindings());
-		$this->assertTrue($listener->isBound('modify'));
-		$this->assertTrue($listener->isBound('create'));
-		$this->assertTrue($listener->isBound('delete'));
+		$this->assertArrayHasKey('*', $listener->getBindings());
+		$this->assertTrue($listener->hasBinding('modify'));
+		$this->assertTrue($listener->hasBinding('create'));
+		$this->assertTrue($listener->hasBinding('delete'));
+		$this->assertTrue($listener->hasBinding('*'));
+
+		$listener = new Listener;
+		$listener->create(function(){});
+		$listener->modify(function(){});
+		$listener->delete(function(){});
+		$listener->anything(function(){});
+		$this->assertArrayHasKey('modify', $listener->getBindings());
+		$this->assertArrayHasKey('create', $listener->getBindings());
+		$this->assertArrayHasKey('delete', $listener->getBindings());
+		$this->assertArrayHasKey('*', $listener->getBindings());
+		$this->assertTrue($listener->hasBinding('modify'));
+		$this->assertTrue($listener->hasBinding('create'));
+		$this->assertTrue($listener->hasBinding('delete'));
+		$this->assertTrue($listener->hasBinding('*'));
 	}
+
 
 	public function testCanGetBinding()
 	{
@@ -30,9 +65,10 @@ class ListenerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('foo', $bindings[0]());
 	}
 
+
 	public function testDetermineEventBinding()
 	{
-		$resource = m::mock('JasonLewis\ResourceWatcher\Resource\Resource');
+		$resource = m::mock('JasonLewis\ResourceWatcher\Resource\ResourceInterface');
 		$listener = new Listener;
 		$event = new Event($resource, Event::RESOURCE_CREATED);
 		$this->assertEquals('create', $listener->determineEventBinding($event));
@@ -41,5 +77,6 @@ class ListenerTest extends PHPUnit_Framework_TestCase {
 		$event = new Event($resource, Event::RESOURCE_DELETED);
 		$this->assertEquals('delete', $listener->determineEventBinding($event));
 	}
+
 
 }
