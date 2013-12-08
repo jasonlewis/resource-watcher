@@ -26,9 +26,9 @@ class Tracker {
 	/**
 	 * Determine if a resource is tracked.
 	 *
-	 * @param  \JasonLewis\ResourceWatcher\Resource\Resource  $resource
+	 * @param  \JasonLewis\ResourceWatcher\Resource\ResourceInterface  $resource
 	 */
-	public function isTracked(Resource $resource)
+	public function isTracked(ResourceInterface $resource)
 	{
 		return isset($this->tracked[$resource->getKey()]);
 	}
