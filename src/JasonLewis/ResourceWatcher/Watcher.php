@@ -112,6 +112,19 @@ class Watcher {
 	}
 
 	/**
+	 * Alias of startWatch.
+	 *
+	 * @param  int  $interval
+	 * @param  int  $timeout
+	 * @param  \Closure  $callback
+	 * @return void
+	 */
+	public function start($interval = 1000000, $timeout = null, Closure $callback = null)
+	{
+		$this->startWatch($interval, $timeout, $callback);
+	}
+
+	/**
 	 * Get the tracker instance.
 	 *
 	 * @return \JasonLewis\ResourceWatcher\Tracker
@@ -129,6 +142,16 @@ class Watcher {
 	public function stopWatch()
 	{
 		$this->watching = false;
+	}
+
+	/**
+	 * Alias of stopWatch.
+	 *
+	 * @return void
+	 */
+	public function stop()
+	{
+		$this->stopWatch();
 	}
 
 	/**
