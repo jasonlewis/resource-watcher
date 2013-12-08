@@ -9,7 +9,7 @@ class FileResource implements ResourceInterface {
 	/**
 	 * SplFileInfo resource.
 	 *
-	 * @var SplFileInfo
+	 * @var \SplFileInfo
 	 */
 	protected $resource;
 
@@ -23,7 +23,7 @@ class FileResource implements ResourceInterface {
 	/**
 	 * Illuminate filesystem instance.
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @var \Illuminate\Filesystem\Filesystem
 	 */
 	protected $files;
 
@@ -44,8 +44,8 @@ class FileResource implements ResourceInterface {
 	/**
 	 * Create a new resource instance.
 	 *
-	 * @param  SplFileInfo  $resource
-	 * @param  Illuminate\Filesystem\Filesystem  $files
+	 * @param  \SplFileInfo  $resource
+	 * @param  \Illuminate\Filesystem\Filesystem  $files
 	 * @return void
 	 */
 	public function __construct(SplFileInfo $resource, Filesystem $files)
@@ -122,7 +122,7 @@ class FileResource implements ResourceInterface {
 	/**
 	 * Get the resource SplFileInfo.
 	 *
-	 * @return SplFileInfo
+	 * @return \SplFileInfo
 	 */
 	public function getSplFileInfo()
 	{

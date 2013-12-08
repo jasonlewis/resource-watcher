@@ -12,14 +12,14 @@ class Watcher {
 	/**
 	 * Tracker instance.
 	 *
-	 * @var JasonLewis\ResourceWatcher\Tracker
+	 * @var \JasonLewis\ResourceWatcher\Tracker
 	 */
 	protected $tracker;
 
 	/**
 	 * Illuminate filesystem instance.
 	 *
-	 * @var Illuminate\Filesystem\Filesystem
+	 * @var \Illuminate\Filesystem\Filesystem
 	 */
 	protected $files;
 
@@ -33,8 +33,8 @@ class Watcher {
 	/**
 	 * Create a new watcher instance.
 	 *
-	 * @param  JasonLewis\ResourceWatcher\Tracker  $tracker
-	 * @param  Illuminate\Filesystem\Filesystem  $files
+	 * @param  \JasonLewis\ResourceWatcher\Tracker  $tracker
+	 * @param  \Illuminate\Filesystem\Filesystem  $files
 	 * @return void
 	 */
 	public function __construct(Tracker $tracker, Filesystem $files)
@@ -47,7 +47,7 @@ class Watcher {
 	 * Register a resource to be watched.
 	 *
 	 * @param  string  $resource
-	 * @return JasonLewis\ResourceWatcher\Listener
+	 * @return \JasonLewis\ResourceWatcher\Listener
 	 */
 	public function watch($resource)
 	{
@@ -82,7 +82,7 @@ class Watcher {
 	 *
 	 * @param  int  $interval
 	 * @param  int  $timeout
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function startWatch($interval = 1000000, $timeout = null, Closure $callback = null)
@@ -114,7 +114,7 @@ class Watcher {
 	/**
 	 * Get the tracker instance.
 	 *
-	 * @return JasonLewis\ResourceWatcher\Tracker
+	 * @return \JasonLewis\ResourceWatcher\Tracker
 	 */
 	public function getTracker()
 	{

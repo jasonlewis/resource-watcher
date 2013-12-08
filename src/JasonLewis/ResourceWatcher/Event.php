@@ -28,7 +28,7 @@ class Event {
 	/**
 	 * Resource instance.
 	 *
-	 * @var JasonLewis\ResourceWatcher\Resource\ResourceInterface
+	 * @var \JasonLewis\ResourceWatcher\Resource\ResourceInterface
 	 */
 	protected $resource;
 
@@ -42,7 +42,7 @@ class Event {
 	/**
 	 * Create a new event instance.
 	 *
-	 * @param  JasonLewis\ResourceWatcher\Resource\ResourceInterface  $resource
+	 * @param  \JasonLewis\ResourceWatcher\Resource\ResourceInterface  $resource
 	 * @param  int  $code
 	 * @return void
 	 */
@@ -65,7 +65,7 @@ class Event {
 	/**
 	 * Get the resource.
 	 *
-	 * @return JasonLewis\ResourceWatcher\Resource\ResourceInterface
+	 * @return \JasonLewis\ResourceWatcher\Resource\ResourceInterface
 	 */
 	public function getResource()
 	{

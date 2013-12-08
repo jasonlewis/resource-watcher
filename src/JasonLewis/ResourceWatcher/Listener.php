@@ -17,8 +17,9 @@ class Listener {
 	 * Bind to a given event.
 	 *
 	 * @param  string  $event
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
+	 * @throws \RuntimeException
 	 */
 	public function on($event, Closure $callback)
 	{
@@ -33,7 +34,7 @@ class Listener {
 	/**
 	 * Bind to anything.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function onAnything(Closure $callback)
@@ -44,7 +45,7 @@ class Listener {
 	/**
 	 * Alias of the onAnything event.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function anything(Closure $callback)
@@ -53,9 +54,9 @@ class Listener {
 	}
 
 	/**
-	 * Bind
+	 * Bind to a modify event.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function onModify(Closure $callback)
@@ -66,7 +67,7 @@ class Listener {
 	/**
 	 * Alias of the onModify method.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function modify(Closure $callback)
@@ -77,7 +78,7 @@ class Listener {
 	/**
 	 * Bind to a delete event.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function onDelete(Closure $callback)
@@ -88,7 +89,7 @@ class Listener {
 	/**
 	 * Alias of the onDelete method.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function delete(Closure $callback)
@@ -99,7 +100,7 @@ class Listener {
 	/**
 	 * Bind to a create event.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function onCreate(Closure $callback)
@@ -110,7 +111,7 @@ class Listener {
 	/**
 	 * Alias of the onCreate method.
 	 *
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	public function create(Closure $callback)
@@ -122,7 +123,7 @@ class Listener {
 	 * Register a binding.
 	 *
 	 * @param  string  $binding
-	 * @param  Closure  $callback
+	 * @param  \Closure  $callback
 	 * @return void
 	 */
 	protected function registerBinding($binding, Closure $callback)
@@ -160,7 +161,7 @@ class Listener {
 	/**
 	 * Determine the binding for a given event.
 	 *
-	 * @param  JasonLewis\ResourceWatcher\Event  $event
+	 * @param  \JasonLewis\ResourceWatcher\Event  $event
 	 * @return string
 	 */
 	public function determineEventBinding(Event $event)
