@@ -25,6 +25,8 @@ class LaravelServiceProvider extends ServiceProvider
     	$this->app->singleton('watcher', function ($app) {
             return new Watcher(new Tracker, $app['files']);
         });
+
+        $this->app->alias('watcher', 'JasonLewis\ResourceWatcher\Watcher');
     }
 
     /**
