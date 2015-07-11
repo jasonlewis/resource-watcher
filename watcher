@@ -24,9 +24,9 @@ require __DIR__.'/vendor/autoload.php';
 |
 */
 
-$files = new Illuminate\Filesystem\Filesystem;
+$files = new Illuminate\Filesystem\Filesystem();
 
-$tracker = new JasonLewis\ResourceWatcher\Tracker;
+$tracker = new JasonLewis\ResourceWatcher\Tracker();
 
 /*
 |--------------------------------------------------------------------------
@@ -61,9 +61,8 @@ $listener = $watcher->watch('foo');
 |
 */
 
-$listener->onCreate(function($resource, $path)
-{
-	echo "{$path} was created.".PHP_EOL;
+$listener->onCreate(function ($resource, $path) {
+    echo "{$path} was created.".PHP_EOL;
 });
 
 /*
@@ -75,9 +74,8 @@ $listener->onCreate(function($resource, $path)
 |
 */
 
-$listener->onDelete(function($resource, $path)
-{
-	echo "{$path} was deleted.".PHP_EOL;
+$listener->onDelete(function ($resource, $path) {
+    echo "{$path} was deleted.".PHP_EOL;
 });
 
 /*
@@ -89,9 +87,8 @@ $listener->onDelete(function($resource, $path)
 |
 */
 
-$listener->onModify(function($resource, $path)
-{
-	echo "{$path} was modified.".PHP_EOL;
+$listener->onModify(function ($resource, $path) {
+    echo "{$path} was modified.".PHP_EOL;
 });
 
 /*
@@ -103,20 +100,18 @@ $listener->onModify(function($resource, $path)
 |
 */
 
-$listener->onAnything(function($event, $resource, $path)
-{
-	switch ($event->getCode())
-	{
-		case JasonLewis\ResourceWatcher\Event::RESOURCE_DELETED:
-			echo "{$path} was deleted (from anything listener).".PHP_EOL;
-			break;
-		case JasonLewis\ResourceWatcher\Event::RESOURCE_MODIFIED:
-			echo "{$path} was modified (from anything listener).".PHP_EOL;
-			break;
-		case JasonLewis\ResourceWatcher\Event::RESOURCE_CREATED:
-			echo "{$path} was created (from anything listener).".PHP_EOL;
-			break;
-	}
+$listener->onAnything(function ($event, $resource, $path) {
+    switch ($event->getCode()) {
+        case JasonLewis\ResourceWatcher\Event::RESOURCE_DELETED:
+            echo "{$path} was deleted (from anything listener).".PHP_EOL;
+            break;
+        case JasonLewis\ResourceWatcher\Event::RESOURCE_MODIFIED:
+            echo "{$path} was modified (from anything listener).".PHP_EOL;
+            break;
+        case JasonLewis\ResourceWatcher\Event::RESOURCE_CREATED:
+            echo "{$path} was created (from anything listener).".PHP_EOL;
+            break;
+    }
 });
 
 /*
