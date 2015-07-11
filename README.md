@@ -9,7 +9,7 @@ A resource watcher allows you to watch a resource for any changes. This means yo
 To install Resource Watcher add it to the `requires` key of your `composer.json` file.
 
 ```
-"jasonlewis/resource-watcher": "1.1.*"
+"jasonlewis/resource-watcher": "1.2.*"
 ```
 
 Then update your project with `composer update`.
@@ -47,8 +47,7 @@ When you watch a resource an instance of `JasonLewis\ResourceWatcher\Listener` i
 There are three events we can listen for: `modify`, `create`, and `delete`. The callback you give to the listener receives two parameters, the first being an implementation of `JasonLewis\ResourceWatcher\Resource\ResourceInterface` and the second being the absolute path to the resource.
 
 ```php
-$listener->modify(function($resource, $path)
-{
+$listener->modify(function($resource, $path) {
     echo "{$path} has been modified.".PHP_EOL;
 });
 ```
@@ -56,8 +55,7 @@ $listener->modify(function($resource, $path)
 You can use the alias methods as well.
 
 ```php
-$listener->onModify(function($resource, $path)
-{
+$listener->onModify(function($resource, $path) {
     echo "{$path} has been modified.".PHP_EOL;
 });
 ```
@@ -65,8 +63,7 @@ $listener->onModify(function($resource, $path)
 You can also listen for any of these events. This time the callback receives a different set of parameters, the first being an instance of `JasonLewis\ResourceWatcher\Event` and the remaining two being the same as before.
 
 ```php
-$listener->anything(function($event, $resource, $path)
-{
+$listener->anything(function($event, $resource, $path) {
 
 });
 ```
@@ -84,8 +81,7 @@ By default the watcher will poll for changes every second. You can adjust this b
 The `start` method can also be given a callback as an optional third parameter. This callback will be fired before checking for any changes to resources.
 
 ```php
-$watcher->start(1000000, null, function($watcher)
-{
+$watcher->start(1000000, null, function($watcher) {
 	// Perhaps perform some other check and then stop the watch.
 	$watcher->stop();
 });
@@ -93,18 +89,18 @@ $watcher->start(1000000, null, function($watcher)
 
 ## Framework Integration
 
-### Laravel 4
+### Laravel 4 and Laravel 5
 
-Included is a service provider for the Laravel 4 framework. This service provider will bind an instance of `JasonLewis\ResourceWatcher\Watcher` to the application container under the `watcher` key.
+Included is a service provider for the Laravel framework. This service provider will bind an instance of `JasonLewis\ResourceWatcher\Watcher` to the application container under the `watcher` key.
+
+Register `JasonLewis\ResourceWatcher\Integration\LaravelServiceProvider` in the array of providers in `app/config/app.php`.
 
 ```php
 $listener = $app['watcher']->watch('path/to/resource');
 
 // Or if you don't have access to an instance of the application container.
-$listener = App::make('watcher')->watch('path/to/resource');
+$listener = app('watcher')->watch('path/to/resource');
 ```
-
-Register `JasonLewis\ResourceWatcher\Integration\LaravelServiceProvider` in the array of providers in `app/config/app.php`.
 
 ## License
 
