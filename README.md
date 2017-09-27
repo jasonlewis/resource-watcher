@@ -95,11 +95,16 @@ Included is a service provider for the Laravel framework. This service provider 
 
 Register `JasonLewis\ResourceWatcher\Integration\LaravelServiceProvider` in the array of providers in `app/config/app.php`.
 
+Register `'Watcher' => 'JasonLewis\ResourceWatcher\Integration\Watcher',` in the array of aliases in `app/config/app.php`. 
+
 ```php
 $listener = $app['watcher']->watch('path/to/resource');
 
 // Or if you don't have access to an instance of the application container.
 $listener = app('watcher')->watch('path/to/resource');
+
+// Or access globally via a application container facade.
+$listener = Watcher::watch('path/to/resource');
 ```
 
 ## License
