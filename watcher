@@ -45,8 +45,8 @@ $watcher = new JasonLewis\ResourceWatcher\Watcher($tracker, $files);
 | Watch For Changes
 |--------------------------------------------------------------------------
 |
-| Watch for changes to a resource. The resource given does not need to
-| exist to begin watching.
+| Watch for changes to a resource. The resource given needs to exist to
+| begin watching.
 |
 */
 
