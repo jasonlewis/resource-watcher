@@ -93,7 +93,7 @@ class FileResource implements ResourceInterface
      */
     public function isModified()
     {
-        return $this->lastModified < $this->files->lastModified($this->path);
+        return $this->lastModified !== $this->files->lastModified($this->path);
     }
 
     /**
