@@ -45,6 +45,18 @@ class WatcherTest extends PHPUnit_Framework_TestCase {
 		$this->assertInstanceOf('JasonLewis\ResourceWatcher\Resource\DirectoryResource', $resource[0]);
 	}
 
+    public function testWatchMultipleDirectoryResource()
+    {
+        $this->files->shouldReceive('exists')->times(16)->andReturn(true);
+        $this->files->shouldReceive('isDirectory')->times(2)->andReturn(true);
+        $this->files->shouldReceive('lastModified')->times(14)->andReturn(time());
+
+        $this->watcher->watch(array(__DIR__,__DIR__));
+
+        $tracked = $this->watcher->getTracker()->getTracked();
+        $resource = array_pop($tracked);
+        $this->assertInstanceOf('JasonLewis\ResourceWatcher\Resource\DirectoryResource', $resource[0]);
+    }
 
 	public function testWatchFileResource()
 	{
