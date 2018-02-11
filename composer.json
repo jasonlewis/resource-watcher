@@ -1,6 +1,7 @@
 {
     "name": "jasonlewis/resource-watcher",
     "description": "Simple PHP resource watcher library.",
+    "license": "BSD 2-Clause",
     "keywords": ["resource", "assets", "laravel"],
     "authors": [
         {
