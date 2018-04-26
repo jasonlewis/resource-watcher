@@ -30,10 +30,10 @@ Any changes you make to the resource will be outputted to the console.
 To watch resources you first need an instance of `JasonLewis\ResourceWatcher\Watcher`. This class has a few dependencies (`JasonLewis\ResourceWatcher\Tracker` and `Illuminate\Filesystem\Filesystem`) that must also be instantiated.
 
 ```php
-$files = new Illuminate\Filesystem\Filesystem;
-$tracker = new JasonLewis\ResourceWatcher\Tracker;
+$files = new \Illuminate\Filesystem\Filesystem;
+$tracker = new \JasonLewis\ResourceWatcher\Tracker;
 
-$watcher = new JasonLewis\ResourceWatcher\Watcher($tracker, $files);
+$watcher = new \JasonLewis\ResourceWatcher\Watcher($tracker, $files);
 ```
 
 Now that we have our watcher we can create a listener for a given resource.
